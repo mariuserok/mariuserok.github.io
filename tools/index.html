@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MART-OS 3.11 — Developer Toolkit</title>
+    <meta
+      name="description"
+      content="MART-OS: a retro desktop full of developer tools that run entirely in your browser. No servers, no tracking, no dependencies."
+    />
+    <meta name="theme-color" content="#008080" />
+    <meta name="color-scheme" content="dark" />
+
+    <meta property="og:title" content="MART-OS 3.11 — Developer Toolkit" />
+    <meta
+      property="og:description"
+      content="A retro desktop full of developer tools. Runs entirely in your browser."
+    />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/tools.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>"
+    />
+  </head>
+
+  <body>
+    <!-- ── BIOS / boot sequence ───────────────────────────── -->
+    <div class="boot" id="boot">
+      <pre class="boot__out" id="bootOut"></pre>
+      <div class="boot__hint" id="bootHint">press any key to skip</div>
+    </div>
+
+    <!-- ── Desktop ────────────────────────────────────────── -->
+    <main class="desktop" id="desktop" data-theme="teal">
+      <div class="icons" id="icons" role="list"></div>
+      <div class="windows" id="windows"></div>
+
+      <div class="badge" aria-hidden="true">
+        <b>MART-OS</b> 3.11<br />
+        for Workgroups
+      </div>
+    </main>
+
+    <!-- ── Taskbar ────────────────────────────────────────── -->
+    <footer class="taskbar" id="taskbar">
+      <button
+        class="start"
+        id="startBtn"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <span class="start__flag" aria-hidden="true">◈</span>
+        <span>Start</span>
+      </button>
+      <div class="tasks" id="tasks"></div>
+      <div class="tray">
+        <button
+          class="tray__btn"
+          id="sndBtn"
+          title="Toggle beeps"
+          aria-pressed="false"
+        >
+          SND
+        </button>
+        <button
+          class="tray__btn"
+          id="crtBtn"
+          title="Toggle CRT effects"
+          aria-pressed="true"
+        >
+          CRT
+        </button>
+        <span class="tray__clock" id="clock">--:--</span>
+      </div>
+    </footer>
+
+    <!-- ── Start menu ─────────────────────────────────────── -->
+    <div class="startmenu" id="startMenu" hidden>
+      <div class="startmenu__rail" aria-hidden="true"><span>MART-OS</span></div>
+      <div class="startmenu__list" id="startList"></div>
+      <div class="startmenu__foot">
+        <div class="startmenu__themes" id="themes">
+          <span>Display</span>
+          <button data-theme-set="teal" title="Workgroups Teal">TEAL</button>
+          <button data-theme-set="amber" title="Amber Phosphor">AMBR</button>
+          <button data-theme-set="green" title="Green Phosphor">GRN</button>
+          <button data-theme-set="grape" title="Synthwave">SYNTH</button>
+        </div>
+        <a class="startmenu__exit" href="../index.html"
+          >↩ Shut down (back to portfolio)</a
+        >
+      </div>
+    </div>
+
+    <!-- ── CRT overlays ───────────────────────────────────── -->
+    <div class="crt" id="crt" aria-hidden="true">
+      <div class="crt__scan"></div>
+      <div class="crt__glow"></div>
+      <div class="crt__flicker"></div>
+    </div>
+
+    <noscript>
+      <p style="padding: 2rem; color: #fff; font: 16px monospace">
+        MART-OS needs JavaScript. Everything runs locally in your browser —
+        there is no server to fall back to.
+      </p>
+    </noscript>
+
+    <script src="../assets/js/tools.js"></script>
+  </body>
+</html>

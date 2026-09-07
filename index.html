@@ -3,17 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>mariuserok — Software Engineer</title>
+    <title>MART | Marius — Software Engineer, Kort &amp; Anlæg</title>
     <meta
       name="description"
-      content="Marius — software engineer building fast, resilient web platforms. .NET, Angular, cloud infrastructure."
+      content="Marius (MART) — Software Engineer in IT Kort &amp; Anlæg at OK a.m.b.a., Aarhus. Portals, platform migrations, and an unreasonable amount of WebGL."
     />
     <meta name="theme-color" content="#05060a" />
 
-    <meta property="og:title" content="mariuserok — Software Engineer" />
+    <meta
+      property="og:title"
+      content="MART | Marius — Software Engineer, Kort &amp; Anlæg"
+    />
     <meta
       property="og:description"
-      content="Software engineer building fast, resilient web platforms."
+      content="Software Engineer at OK a.m.b.a. Portals, platform migrations, and an unreasonable amount of WebGL."
     />
     <meta property="og:type" content="website" />
 
@@ -34,7 +37,7 @@
     <!-- ── Loader ─────────────────────────────────────────── -->
     <div class="loader" id="loader" aria-hidden="true">
       <div class="loader__inner">
-        <div class="loader__glyph">M<span>/</span>E</div>
+        <div class="loader__glyph">MART<span>◈</span></div>
         <div class="loader__bar"><i id="loaderBar"></i></div>
         <div class="loader__pct" id="loaderPct">0%</div>
       </div>
@@ -55,16 +58,18 @@
     <header class="nav" id="nav">
       <a href="#top" class="nav__logo" data-magnetic>
         <span class="nav__logo-mark">◈</span>
-        <span class="nav__logo-text">mariuserok</span>
+        <span class="nav__logo-text">MART</span>
       </a>
       <nav class="nav__links" aria-label="Primary">
         <a href="#work" data-nav>Work</a>
         <a href="#about" data-nav>About</a>
-        <a href="#stack" data-nav>Stack</a>
+        <a href="#stack" data-nav>Toolbox</a>
+        <a href="tools/index.html" class="nav__ext">MART-OS ▸</a>
+        <a href="retro/index.html" class="nav__ext">Retro ▸</a>
         <a href="#contact" data-nav>Contact</a>
       </nav>
       <a class="nav__cta" href="#contact" data-magnetic>
-        <span>Let's talk</span>
+        <span>Say hi</span>
         <em>→</em>
       </a>
       <button
@@ -80,7 +85,9 @@
     <div class="mobile-menu" id="mobileMenu">
       <a href="#work">Work</a>
       <a href="#about">About</a>
-      <a href="#stack">Stack</a>
+      <a href="#stack">Toolbox</a>
+      <a href="tools/index.html">MART-OS ▸</a>
+      <a href="retro/index.html">Retro ▸</a>
       <a href="#contact">Contact</a>
     </div>
 
@@ -89,34 +96,37 @@
       <section class="hero" id="hero">
         <div class="hero__inner">
           <p class="hero__eyebrow reveal">
-            <span class="dot"></span> Available for select work — 2026
+            <span class="dot"></span> OK a.m.b.a. · Aarhus · currently
+            caffeinated
           </p>
 
           <h1 class="hero__title" data-parallax="0.05">
             <span class="line"
-              ><span class="word" data-glitch="BUILDING">BUILDING</span></span
-            >
-            <span class="line"
-              ><span class="word outline" data-glitch="THINGS THAT"
-                >THINGS THAT</span
+              ><span class="word" data-glitch="MART | MARIUS"
+                >MART | MARIUS</span
               ></span
             >
             <span class="line"
-              ><span class="word grad" data-glitch="SHOULDN'T BREAK"
-                >SHOULDN'T BREAK</span
+              ><span class="word outline" data-glitch="SOFTWARE ENGINEER"
+                >SOFTWARE ENGINEER</span
+              ></span
+            >
+            <span class="line"
+              ><span class="word grad" data-glitch="KORT &amp; ANLÆG"
+                >KORT &amp; ANLÆG</span
               ></span
             >
           </h1>
 
           <p class="hero__sub reveal">
-            Software engineer. I design and ship <b>resilient backends</b>,
-            <b>fluid interfaces</b>, and the cloud plumbing that keeps them
-            alive at 3&nbsp;a.m.
+            I build the <b>portals</b> our customers actually click on, drag
+            services onto <b>Horizon</b>, and spend suspicious amounts of time
+            teaching <b>AI</b> to do my job for me. This page is exhibit A.
           </p>
 
           <div class="hero__actions reveal">
             <a href="#work" class="btn btn--primary" data-magnetic>
-              <span>View the work</span>
+              <span>See what I've built</span>
               <svg
                 viewBox="0 0 24 24"
                 width="16"
@@ -157,14 +167,13 @@
 
           <div class="hero__stats reveal">
             <div class="stat">
-              <b data-count="9">0</b><span>years shipping</span>
+              <b data-count="6">0</b><span>years in software</span>
             </div>
             <div class="stat">
-              <b data-count="40" data-suffix="+">0</b><span>projects</span>
+              <b data-count="2">0</b><span>guilds joined</span>
             </div>
             <div class="stat">
-              <b data-count="99" data-suffix=".9%">0</b
-              ><span>uptime target</span>
+              <b data-count="0">0</b><span>dependencies on this page</span>
             </div>
           </div>
         </div>
@@ -190,12 +199,12 @@
       <div class="marquee" aria-hidden="true">
         <div class="marquee__track">
           <span
-            >TypeScript ✦ .NET ✦ Angular ✦ Kubernetes ✦ PostgreSQL ✦ Terraform ✦
-            GCP ✦ WebGL ✦ Azure DevOps ✦ gRPC ✦
+            >Angular ✦ TypeScript ✦ C# ✦ .NET ✦ Azure DevOps ✦ GCP ✦ Horizon ✦
+            Terraform ✦ Helm ✦ Copilot ✦ WebGL ✦
           </span>
           <span
-            >TypeScript ✦ .NET ✦ Angular ✦ Kubernetes ✦ PostgreSQL ✦ Terraform ✦
-            GCP ✦ WebGL ✦ Azure DevOps ✦ gRPC ✦
+            >Angular ✦ TypeScript ✦ C# ✦ .NET ✦ Azure DevOps ✦ GCP ✦ Horizon ✦
+            Terraform ✦ Helm ✦ Copilot ✦ WebGL ✦
           </span>
         </div>
       </div>
@@ -204,31 +213,34 @@
       <section class="section" id="work">
         <div class="section__head reveal">
           <span class="section__num">01</span>
-          <h2 class="section__title">Selected work</h2>
+          <h2 class="section__title">What I work on</h2>
           <p class="section__desc">
-            A few things I've built, broken, and rebuilt properly.
+            Portals, the platform underneath them, and the guilds that argue
+            about how to build both.
           </p>
         </div>
 
+        <!-- TODO(Marius): sharpen the descriptions below — I kept them deliberately
+             vague because I don't know the internals. Add real numbers where you can. -->
         <div class="cards">
           <article class="card reveal" data-tilt data-accent="34,211,238">
             <div class="card__glow"></div>
             <div class="card__body">
               <div class="card__top">
-                <span class="card__tag">Platform</span>
-                <span class="card__year">2025</span>
+                <span class="card__tag">Portal</span>
+                <span class="card__year">ongoing</span>
               </div>
-              <h3 class="card__title">Horizon Migration Engine</h3>
+              <h3 class="card__title">Vaskeportal</h3>
               <p class="card__text">
-                Moved 30+ services from a legacy cluster to a modern GCP landing
-                zone with zero customer-facing downtime. Automated the whole
-                path: IaC, secrets, database cutover.
+                The web side of OK's car wash business. Customers come to get
+                their car clean; my job is making sure the portal is the easiest
+                part of that.
               </p>
               <ul class="card__stack">
-                <li>Terraform</li>
-                <li>GKE</li>
-                <li>Helm</li>
-                <li>CloudSQL</li>
+                <li>Angular</li>
+                <li>TypeScript</li>
+                <li>.NET</li>
+                <li>Azure DevOps</li>
               </ul>
             </div>
             <div class="card__shine"></div>
@@ -238,43 +250,20 @@
             <div class="card__glow"></div>
             <div class="card__body">
               <div class="card__top">
-                <span class="card__tag">API</span>
-                <span class="card__year">2024</span>
+                <span class="card__tag">Portal</span>
+                <span class="card__year">ongoing</span>
               </div>
-              <h3 class="card__title">Ledger-Grade REST Core</h3>
+              <h3 class="card__title">Sponsorportal</h3>
               <p class="card__text">
-                A strictly versioned .NET API handling millions of financial
-                events a day. Idempotent writes, contract tests, and an error
-                model that never lies to the client.
-              </p>
-              <ul class="card__stack">
-                <li>.NET 9</li>
-                <li>EF Core</li>
-                <li>Postgres</li>
-                <li>OpenAPI</li>
-              </ul>
-            </div>
-            <div class="card__shine"></div>
-          </article>
-
-          <article class="card reveal" data-tilt data-accent="244,114,182">
-            <div class="card__glow"></div>
-            <div class="card__body">
-              <div class="card__top">
-                <span class="card__tag">Frontend</span>
-                <span class="card__year">2024</span>
-              </div>
-              <h3 class="card__title">Realtime Ops Console</h3>
-              <p class="card__text">
-                An Angular control room streaming thousands of updates per
-                second. Virtualized tables, zoneless change detection, 60fps
-                under load.
+                Sponsorstøtte, digitised. Local clubs, their members, and the
+                money that quietly flows to them every time someone fills up.
+                Boring is the goal here.
               </p>
               <ul class="card__stack">
                 <li>Angular</li>
-                <li>Signals</li>
-                <li>SignalR</li>
-                <li>D3</li>
+                <li>TypeScript</li>
+                <li>.NET</li>
+                <li>SQL</li>
               </ul>
             </div>
             <div class="card__shine"></div>
@@ -284,14 +273,81 @@
             <div class="card__glow"></div>
             <div class="card__body">
               <div class="card__top">
-                <span class="card__tag">Experiment</span>
+                <span class="card__tag">Platform</span>
                 <span class="card__year">2026</span>
               </div>
-              <h3 class="card__title">Raymarched Portfolio</h3>
+              <h3 class="card__title">Horizon migration</h3>
               <p class="card__text">
-                The site you're looking at. A hand-written GLSL fragment shader
-                raymarching an infinite lattice — no libraries, no framework, no
-                build step.
+                Moving services off the old cluster and onto Horizon, our GCP
+                landing zone. New projects, new registry, new database — ideally
+                without anyone noticing.
+              </p>
+              <ul class="card__stack">
+                <li>GCP</li>
+                <li>Terraform</li>
+                <li>Helm</li>
+                <li>CloudSQL</li>
+              </ul>
+            </div>
+            <div class="card__shine"></div>
+          </article>
+
+          <article class="card reveal" data-tilt data-accent="244,114,182">
+            <div class="card__glow"></div>
+            <div class="card__body">
+              <div class="card__top">
+                <span class="card__tag">Guild</span>
+                <span class="card__year">member</span>
+              </div>
+              <h3 class="card__title">AI Guild</h3>
+              <p class="card__text">
+                Working out where AI genuinely helps us ship and where it just
+                produces confident nonsense. Tooling, prompts, guardrails, and a
+                lot of experiments.
+              </p>
+              <ul class="card__stack">
+                <li>Copilot</li>
+                <li>Agents</li>
+                <li>Prompting</li>
+              </ul>
+            </div>
+            <div class="card__shine"></div>
+          </article>
+
+          <article class="card reveal" data-tilt data-accent="251,191,36">
+            <div class="card__glow"></div>
+            <div class="card__body">
+              <div class="card__top">
+                <span class="card__tag">Guild</span>
+                <span class="card__year">member</span>
+              </div>
+              <h3 class="card__title">Frontend Guild</h3>
+              <p class="card__text">
+                Shared components, shared conventions, shared opinions about
+                whether that should be a signal. Making our frontends feel like
+                they came from the same company.
+              </p>
+              <ul class="card__stack">
+                <li>Angular</li>
+                <li>Design systems</li>
+                <li>Standards</li>
+              </ul>
+            </div>
+            <div class="card__shine"></div>
+          </article>
+
+          <article class="card reveal" data-tilt data-accent="56,189,248">
+            <div class="card__glow"></div>
+            <div class="card__body">
+              <div class="card__top">
+                <span class="card__tag">Playground</span>
+                <span class="card__year">2026</span>
+              </div>
+              <h3 class="card__title">This page</h3>
+              <p class="card__text">
+                Built with an AI agent as a co-pilot, then argued with until it
+                looked right. The background is a hand-written GLSL raymarcher.
+                No framework, no build step, no dependencies.
               </p>
               <ul class="card__stack">
                 <li>WebGL</li>
@@ -312,27 +368,27 @@
             <h2 class="section__title">About</h2>
           </div>
           <p class="lead reveal">
-            I'm Marius. I've spent the better part of a decade in the
-            unglamorous middle of software — the part where the deploy pipeline
-            argues with the database and someone has to make peace.
+            I'm Marius — <b>MART</b> if you've only ever seen me in a commit log
+            or a Teams thread. Software Engineer in IT Kort &amp; Anlæg here at
+            OK, based in Aarhus.
           </p>
           <p class="reveal">
-            I care about systems that stay boring under pressure: clear
-            contracts, honest errors, observable everything. And when the
-            backend is calm, I go make the frontend feel
-            <i>fast</i> — because perceived performance is a feature too.
+            Roughly five years of software behind me before I took the engineer
+            title here in December 2025. Most of that time has been spent on the
+            unglamorous middle bit — where the pipeline argues with the database
+            and somebody has to make peace.
           </p>
           <p class="reveal">
-            Outside of work I read too much about compilers, build silly
-            shaders, and pretend my espresso setup is a distributed system.
+            These days it's portals, the platform underneath them, and an
+            <i>enthusiastic</i> amount of poking at AI tooling to see what it
+            can actually take off our plates. This whole page is one of those
+            experiments.
           </p>
 
           <div class="facts reveal">
-            <div class="fact"><span>Based</span><b>Norway</b></div>
-            <div class="fact"><span>Focus</span><b>Backend / Platform</b></div>
-            <div class="fact">
-              <span>Currently</span><b>Cloud migrations</b>
-            </div>
+            <div class="fact"><span>Based</span><b>Aarhus, DK</b></div>
+            <div class="fact"><span>Team</span><b>IT Kort &amp; Anlæg</b></div>
+            <div class="fact"><span>Guilds</span><b>AI &amp; Frontend</b></div>
           </div>
         </div>
 
@@ -352,36 +408,37 @@
           <span class="section__num">03</span>
           <h2 class="section__title">The toolbox</h2>
           <p class="section__desc">
-            Things I reach for without reading the docs first.
+            What I reach for on a normal Tuesday. Bars are vibes, not
+            certifications.
           </p>
         </div>
 
         <div class="stack-grid">
           <div class="stack-col reveal">
-            <h4>Backend</h4>
-            <ul>
-              <li data-skill="92"><span>C# / .NET</span></li>
-              <li data-skill="80"><span>Node / TypeScript</span></li>
-              <li data-skill="74"><span>Go</span></li>
-              <li data-skill="86"><span>PostgreSQL</span></li>
-            </ul>
-          </div>
-          <div class="stack-col reveal">
             <h4>Frontend</h4>
             <ul>
               <li data-skill="88"><span>Angular</span></li>
-              <li data-skill="82"><span>Vanilla JS / DOM</span></li>
+              <li data-skill="85"><span>TypeScript</span></li>
               <li data-skill="79"><span>CSS architecture</span></li>
-              <li data-skill="64"><span>WebGL / GLSL</span></li>
+              <li data-skill="60"><span>WebGL / GLSL</span></li>
             </ul>
           </div>
           <div class="stack-col reveal">
-            <h4>Platform</h4>
+            <h4>Backend</h4>
             <ul>
-              <li data-skill="85"><span>Kubernetes</span></li>
-              <li data-skill="83"><span>Terraform</span></li>
-              <li data-skill="78"><span>GCP</span></li>
-              <li data-skill="87"><span>CI/CD</span></li>
+              <li data-skill="86"><span>C# / .NET</span></li>
+              <li data-skill="82"><span>REST APIs</span></li>
+              <li data-skill="78"><span>SQL</span></li>
+              <li data-skill="70"><span>Node / TypeScript</span></li>
+            </ul>
+          </div>
+          <div class="stack-col reveal">
+            <h4>Platform &amp; AI</h4>
+            <ul>
+              <li data-skill="84"><span>Azure DevOps / CI</span></li>
+              <li data-skill="76"><span>GCP / Horizon</span></li>
+              <li data-skill="72"><span>Terraform / Helm</span></li>
+              <li data-skill="88"><span>AI-assisted dev</span></li>
             </ul>
           </div>
         </div>
@@ -396,27 +453,20 @@
 
         <ol class="timeline">
           <li class="timeline__item reveal">
-            <span class="timeline__year">2022 — now</span>
-            <h3>Senior Software Engineer</h3>
+            <span class="timeline__year">Dec 2025 — now</span>
+            <h3>Software Engineer · IT Kort &amp; Anlæg, OK a.m.b.a.</h3>
             <p>
-              Leading platform migrations, API standards, and the parts of the
-              system nobody wants to own.
+              Portals, platform migrations, and two guilds' worth of opinions.
+              Aarhus.
             </p>
           </li>
+          <!-- TODO(Marius): replace this with your actual roles/employers before Dec 2025 -->
           <li class="timeline__item reveal">
-            <span class="timeline__year">2019 — 2022</span>
-            <h3>Full-stack Engineer</h3>
+            <span class="timeline__year">~2020 — 2025</span>
+            <h3>Five years of software before the title</h3>
             <p>
-              Shipped customer-facing products end to end. Learned that
-              "temporary" scripts live forever.
-            </p>
-          </li>
-          <li class="timeline__item reveal">
-            <span class="timeline__year">2017 — 2019</span>
-            <h3>Developer</h3>
-            <p>
-              First production outage, first proper code review, first time
-              reading a stack trace calmly.
+              The formative years: first production outage, first proper code
+              review, first time reading a stack trace without panicking.
             </p>
           </li>
         </ol>
@@ -426,20 +476,22 @@
       <section class="section contact" id="contact">
         <div class="contact__inner reveal">
           <span class="section__num">05</span>
-          <h2 class="contact__title" data-glitch="Let's build something">
-            Let's build something
-          </h2>
+          <h2 class="contact__title" data-glitch="Come say hi">Come say hi</h2>
           <p class="contact__desc">
-            Got a system that's creaking, an API that needs a spine, or an
-            interface that deserves better? I'm listening.
+            Got a portal that needs building, a service that needs migrating, or
+            an AI idea you want to argue about? My door is a Teams message away.
           </p>
-          <a
-            class="contact__mail"
-            href="mailto:hello@mariuserok.dev"
-            data-magnetic
-            >hello@mariuserok.dev</a
+          <a class="contact__mail" href="mailto:mart@ok.dk" data-magnetic
+            >mart@ok.dk</a
           >
           <div class="contact__socials">
+            <a
+              href="https://teams.microsoft.com/l/chat/0/0?users=mart@ok.dk"
+              target="_blank"
+              rel="noopener"
+              data-magnetic
+              >Teams</a
+            >
             <a
               href="https://github.com/mariuserok"
               target="_blank"
@@ -447,22 +499,17 @@
               data-magnetic
               >GitHub</a
             >
-            <a
-              href="https://www.linkedin.com/"
-              target="_blank"
-              rel="noopener"
-              data-magnetic
-              >LinkedIn</a
-            >
-            <a href="mailto:hello@mariuserok.dev" data-magnetic>Email</a>
+            <a href="mailto:mart@ok.dk" data-magnetic>Email</a>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <span>© <span id="year">2026</span> mariuserok</span>
-      <span class="footer__mid">Built by hand — no frameworks were harmed</span>
+      <span>© <span id="year">2026</span> MART · Marius</span>
+      <span class="footer__mid"
+        >Built with an AI agent — no frameworks were harmed</span
+      >
       <a href="#top" data-magnetic>Back to top ↑</a>
     </footer>
 

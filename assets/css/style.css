@@ -39,6 +39,8 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 76px;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -48,10 +50,18 @@ body {
   font-family: var(--font);
   font-size: 16px;
   line-height: 1.65;
-  overflow-x: hidden;
+  /* `clip` instead of `hidden` so body never becomes the scroll container and steal snapping from html */
+  overflow-x: clip;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+.hero,
+.section,
+.footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
 }
 
 body.is-locked {
@@ -421,6 +431,19 @@ ol {
   transform-origin: left;
 }
 
+/* Off-site link — flagged so it doesn't read as another scroll anchor */
+.nav__links a.nav__ext {
+  color: var(--cyan);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+.nav__links a.nav__ext:hover {
+  color: var(--text);
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.55);
+}
+
 .nav__cta {
   display: inline-flex;
   align-items: center;
@@ -589,7 +612,7 @@ ol {
 
 .hero__title {
   margin: 1.6rem 0 1.8rem;
-  font-size: clamp(2.6rem, 9.4vw, 8rem);
+  font-size: clamp(2rem, 6.4vw, 5.6rem);
   font-weight: 700;
   line-height: 0.92;
   letter-spacing: -0.045em;
@@ -1535,6 +1558,10 @@ ol {
 
 /* ═══ Motion preferences ═══════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: none;
+  }
+
   *,
   *::before,
   *::after {

@@ -125,37 +125,37 @@
   }
 
   /* ── 3D tilt cards ───────────────────────────────────── */
-  if (finePointer && !reduced) {
-    $$("[data-tilt]").forEach(function (el) {
-      var max = parseFloat(el.dataset.tiltMax || "9");
-      var accent = el.dataset.accent;
-      if (accent) el.style.setProperty("--a", accent);
+  var tiltEnabled = finePointer && !reduced;
 
-      el.addEventListener("pointermove", function (e) {
-        var r = el.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width;
-        var py = (e.clientY - r.top) / r.height;
-        el.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-        el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-        el.style.transform =
-          "perspective(1000px) rotateY(" +
-          ((px - 0.5) * max * 2).toFixed(2) +
-          "deg)" +
-          " rotateX(" +
-          ((0.5 - py) * max * 2).toFixed(2) +
-          "deg)" +
-          " translateZ(14px)";
-      });
+  function attachTilt(el) {
+    var accent = el.dataset.accent;
+    if (accent) el.style.setProperty("--a", accent);
+    if (!tiltEnabled) return;
 
-      el.addEventListener("pointerleave", function () {
-        el.style.transform = "";
-      });
+    var max = parseFloat(el.dataset.tiltMax || "9");
+
+    el.addEventListener("pointermove", function (e) {
+      var r = el.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width;
+      var py = (e.clientY - r.top) / r.height;
+      el.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+      el.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+      el.style.transform =
+        "perspective(1000px) rotateY(" +
+        ((px - 0.5) * max * 2).toFixed(2) +
+        "deg)" +
+        " rotateX(" +
+        ((0.5 - py) * max * 2).toFixed(2) +
+        "deg)" +
+        " translateZ(14px)";
     });
-  } else {
-    $$("[data-tilt][data-accent]").forEach(function (el) {
-      el.style.setProperty("--a", el.dataset.accent);
+
+    el.addEventListener("pointerleave", function () {
+      el.style.transform = "";
     });
   }
+
+  $$("[data-tilt]").forEach(attachTilt);
 
   /* ── Reveal on scroll ────────────────────────────────── */
   (function reveal() {
@@ -217,41 +217,39 @@
   })();
 
   /* ── Animated counters ───────────────────────────────── */
-  (function counters() {
-    var nums = $$("[data-count]");
-    if (!nums.length) return;
+  function runCounter(el) {
+    var target = parseFloat(el.dataset.count);
+    var suffix = el.dataset.suffix || "";
+    var dur = 1500,
+      t0 = performance.now();
+    (function step(now) {
+      var p = clamp((now - t0) / dur, 0, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased) + (p === 1 ? suffix : "");
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
 
-    function run(el) {
-      var target = parseFloat(el.dataset.count);
-      var suffix = el.dataset.suffix || "";
-      var dur = 1500,
-        t0 = performance.now();
-      (function step(now) {
-        var p = clamp((now - t0) / dur, 0, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(target * eased) + (p === 1 ? suffix : "");
-        if (p < 1) requestAnimationFrame(step);
-      })(t0);
-    }
-
+  function attachCounter(el) {
     if (!("IntersectionObserver" in window)) {
-      nums.forEach(run);
+      runCounter(el);
       return;
     }
     var io = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (e) {
           if (!e.isIntersecting) return;
-          run(e.target);
+          runCounter(e.target);
           io.unobserve(e.target);
         });
       },
       { threshold: 0.6 },
     );
-    nums.forEach(function (n) {
-      io.observe(n);
-    });
-  })();
+    io.observe(el);
+  }
+
+  // counters fed by the GitHub API attach themselves once the data lands
+  $$("[data-count]:not([data-gh])").forEach(attachCounter);
 
   /* ── Nav: sticky, progress, scroll spy ───────────────── */
   (function navigation() {
@@ -408,21 +406,9 @@
     });
   })();
 
-  /* ── Smooth anchor scrolling ─────────────────────────── */
-  document.addEventListener("click", function (e) {
-    var link = e.target.closest('a[href^="#"]');
-    if (!link) return;
-    var id = link.getAttribute("href");
-    if (id === "#") return;
-    var target = document.querySelector(id);
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({
-      behavior: reduced ? "auto" : "smooth",
-      block: "start",
-    });
-    history.replaceState(null, "", id);
-  });
+  /* ── Anchor scrolling ────────────────────────────────── */
+  // Native anchor navigation is used deliberately: it honours scroll-padding-top
+  // and cooperates with CSS scroll-snap, which a scripted scrollIntoView does not.
 
   /* ── Misc ────────────────────────────────────────────── */
   var yearEl = $("#year");
