@@ -286,7 +286,12 @@ body {
   line-height: 1.02;
   margin: 0 0 12px;
   letter-spacing: -0.02em;
-  background: linear-gradient(120deg, var(--text), var(--cyan) 55%, var(--violet));
+  background: linear-gradient(
+    120deg,
+    var(--text),
+    var(--cyan) 55%,
+    var(--violet)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

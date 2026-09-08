@@ -74,13 +74,7 @@
               it.y = it.s * 0.45;
               it.v = Math.floor(M.hash2(gx, gz, 70 + k) * ROCK_VARIANTS);
               it.r = it.s * 1.05;
-              M.qAxisAngle(
-                it.q,
-                0,
-                1,
-                0,
-                M.hash2(gx, gz, 80 + k) * M.TAU
-              );
+              M.qAxisAngle(it.q, 0, 1, 0, M.hash2(gx, gz, 80 + k) * M.TAU);
               it.spin = 0;
             }
           }
@@ -173,5 +167,10 @@
     };
   }
 
-  SG.World = { create: create, CELL: CELL, ROCK_VARIANTS: ROCK_VARIANTS, SPIRE_VARIANTS: SPIRE_VARIANTS };
+  SG.World = {
+    create: create,
+    CELL: CELL,
+    ROCK_VARIANTS: ROCK_VARIANTS,
+    SPIRE_VARIANTS: SPIRE_VARIANTS,
+  };
 })();

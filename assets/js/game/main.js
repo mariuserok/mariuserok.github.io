@@ -101,7 +101,7 @@ float vnoise(vec3 x){
       }
       frag = vec4(col, 1.0);
     }`,
-    ["uRight", "uUp", "uFwd", "uTanHalf", "uTime"]
+    ["uRight", "uUp", "uFwd", "uTanHalf", "uTime"],
   );
 
   var groundProg = GL.program(
@@ -144,7 +144,7 @@ float vnoise(vec3 x){
       col = mix(col, skyColor(dir), fog);
       frag = vec4(col, 1.0);
     }`,
-    ["uVP", "uCenter", "uSize", "uCam", "uFog"]
+    ["uVP", "uCenter", "uSize", "uCam", "uFog"],
   );
 
   var meshProg = GL.program(
@@ -214,7 +214,7 @@ float vnoise(vec3 x){
       col = mix(col, skyColor(dir), fog);
       frag = vec4(col, 1.0);
     }`,
-    ["uVP", "uCam", "uLightDir", "uFog", "uMode"]
+    ["uVP", "uCam", "uLightDir", "uFog", "uMode"],
   );
 
   /* ═══ Geometry ════════════════════════════════════════════ */
@@ -249,7 +249,7 @@ float vnoise(vec3 x){
     new Float32Array([
       -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, -1, 1, 0, 1, -1, 0, 1,
     ]),
-    gl.STATIC_DRAW
+    gl.STATIC_DRAW,
   );
   gl.enableVertexAttribArray(GL.LOC.POS);
   gl.vertexAttribPointer(GL.LOC.POS, 3, gl.FLOAT, false, 0, 0);
@@ -319,7 +319,14 @@ float vnoise(vec3 x){
     return { a: a, n: n };
   }
   var bolts = pool(512, function () {
-    return { on: false, pos: M.v3(), vel: M.v3(), q: M.quat(), life: 0, foe: false };
+    return {
+      on: false,
+      pos: M.v3(),
+      vel: M.v3(),
+      q: M.quat(),
+      life: 0,
+      foe: false,
+    };
   });
   var drones = pool(48, function () {
     return {
@@ -446,7 +453,7 @@ float vnoise(vec3 x){
         d.pos,
         ship.pos[0] + Math.cos(a) * r,
         M.clamp(ship.pos[1] + (Math.random() - 0.5) * 260, 60, 700),
-        ship.pos[2] + Math.sin(a) * r
+        ship.pos[2] + Math.sin(a) * r,
       );
       M.v3set(d.vel, 0, 0, 0);
       M.qIdentity(d.q);
@@ -483,14 +490,14 @@ float vnoise(vec3 x){
         s.vel,
         (Math.random() - 0.5) * spread,
         (Math.random() - 0.5) * spread,
-        (Math.random() - 0.5) * spread
+        (Math.random() - 0.5) * spread,
       );
       M.qAxisAngle(s.q, 0, 1, 0, Math.random() * M.TAU);
       M.v3set(
         s.spin,
         (Math.random() - 0.5) * 9,
         (Math.random() - 0.5) * 9,
-        (Math.random() - 0.5) * 9
+        (Math.random() - 0.5) * 9,
       );
       s.max = s.life = 0.35 + Math.random() * 0.7;
       s.size = size * (0.5 + Math.random());
@@ -555,7 +562,12 @@ float vnoise(vec3 x){
     var boosting = !!keys.boost && ship.alive;
     var target = (boosting ? CFG.boost : CFG.cruise) * ship.throttle;
     if (!ship.alive) target = 0;
-    ship.speed = M.damp(ship.speed, target, boosting ? CFG.accel * 1.6 : CFG.accel, dt);
+    ship.speed = M.damp(
+      ship.speed,
+      target,
+      boosting ? CFG.accel * 1.6 : CFG.accel,
+      dt,
+    );
 
     M.qRotate(fwd, ship.q, FORWARD);
     M.v3scale(ship.vel, fwd, ship.speed);
@@ -566,7 +578,8 @@ float vnoise(vec3 x){
       ship.pos[1] = M.damp(ship.pos[1], CFG.minY, 12, dt);
       if (ship.pos[1] < CFG.minY - 1 && ship.alive) damage(14, true);
     }
-    if (ship.pos[1] > CFG.maxY) ship.pos[1] = M.damp(ship.pos[1], CFG.maxY, 6, dt);
+    if (ship.pos[1] > CFG.maxY)
+      ship.pos[1] = M.damp(ship.pos[1], CFG.maxY, 6, dt);
 
     // Guns.
     ship.fireTimer -= dt;
@@ -608,7 +621,7 @@ float vnoise(vec3 x){
           tmpB,
           ship.pos[0] - it.x,
           it.kind === 1 ? 0 : ship.pos[1] - it.y,
-          ship.pos[2] - it.z
+          ship.pos[2] - it.z,
         );
         if (M.v3len2(tmpB) < 1e-4) M.v3set(tmpB, 1, 0, 0);
         M.v3norm(tmpB, tmpB);
@@ -756,7 +769,7 @@ float vnoise(vec3 x){
       if (e.fire <= 0 && dist < 900 && ship.alive) {
         e.fire = 1.8 + Math.random() * 1.4;
         // Lead the target, but sloppily, so it stays dodgeable.
-        M.v3addScaled(tmpB, ship.pos, ship.vel, dist / CFG.enemyBolt * 0.75);
+        M.v3addScaled(tmpB, ship.pos, ship.vel, (dist / CFG.enemyBolt) * 0.75);
         M.v3sub(tmpB, tmpB, e.pos);
         M.v3norm(tmpB, tmpB);
         // Deliberately sloppy: a perfect solution is not dodgeable.
@@ -768,7 +781,8 @@ float vnoise(vec3 x){
       }
     }
 
-    if (alive < CFG.enemyWant && ship.alive && Math.random() < dt * 2.5) spawnDrone();
+    if (alive < CFG.enemyWant && ship.alive && Math.random() < dt * 2.5)
+      spawnDrone();
   }
 
   function updateShards(dt) {
@@ -826,7 +840,7 @@ float vnoise(vec3 x){
     M.v3norm(tmpA, tmpA);
 
     var speedT = M.clamp(ship.speed / CFG.boost, 0, 1);
-    cam.fov = M.damp(cam.fov, 1.02 + speedT * 0.30, 4, dt);
+    cam.fov = M.damp(cam.fov, 1.02 + speedT * 0.3, 4, dt);
 
     M.m4LookAt(view, cam.pos, camLook, tmpA, cam.basis);
   }
@@ -871,20 +885,44 @@ float vnoise(vec3 x){
 
     for (k = 0; k < drones.n; k++) {
       e = drones.a[k];
-      if (e.on) GL.push(mDrone, e.pos[0], e.pos[1], e.pos[2], 4.5, e.q, 1, 1, 1, 1);
+      if (e.on)
+        GL.push(mDrone, e.pos[0], e.pos[1], e.pos[2], 4.5, e.q, 1, 1, 1, 1);
     }
 
     if (ship.alive) {
-      GL.push(mShip, ship.pos[0], ship.pos[1], ship.pos[2], 1, ship.q, 1, 1, 1,
-        keys.boost ? 1.9 : 1);
+      GL.push(
+        mShip,
+        ship.pos[0],
+        ship.pos[1],
+        ship.pos[2],
+        1,
+        ship.q,
+        1,
+        1,
+        1,
+        keys.boost ? 1.9 : 1,
+      );
     }
 
     for (k = 0; k < bolts.n; k++) {
       b = bolts.a[k];
       if (!b.on) continue;
       if (M.v3dist2(b.pos, cam.pos) < 25) continue;
-      if (b.foe) GL.push(mBolt, b.pos[0], b.pos[1], b.pos[2], 2.6, b.q, 1, 0.34, 0.45, 1);
-      else GL.push(mBolt, b.pos[0], b.pos[1], b.pos[2], 2.2, b.q, 0.4, 1, 0.95, 1);
+      if (b.foe)
+        GL.push(
+          mBolt,
+          b.pos[0],
+          b.pos[1],
+          b.pos[2],
+          2.6,
+          b.q,
+          1,
+          0.34,
+          0.45,
+          1,
+        );
+      else
+        GL.push(mBolt, b.pos[0], b.pos[1], b.pos[2], 2.2, b.q, 0.4, 1, 0.95, 1);
     }
 
     for (k = 0; k < shards.n; k++) {
@@ -896,8 +934,18 @@ float vnoise(vec3 x){
       if (d2 < 64) continue;
       var near = Math.min(1, (d2 - 64) / 340);
       var t = s.life / s.max;
-      GL.push(mShard, s.pos[0], s.pos[1], s.pos[2], s.size * (0.4 + t * 0.8), s.q,
-        s.col[0], s.col[1], s.col[2], t * t * 1.6 * near);
+      GL.push(
+        mShard,
+        s.pos[0],
+        s.pos[1],
+        s.pos[2],
+        s.size * (0.4 + t * 0.8),
+        s.q,
+        s.col[0],
+        s.col[1],
+        s.col[2],
+        t * t * 1.6 * near,
+      );
     }
   }
 
@@ -996,7 +1044,8 @@ float vnoise(vec3 x){
   function updateHUD(dt) {
     hudClock -= dt;
     el.thr.style.transform = "scaleX(" + ship.throttle.toFixed(3) + ")";
-    el.shield.style.transform = "scaleX(" + (ship.shield / 100).toFixed(3) + ")";
+    el.shield.style.transform =
+      "scaleX(" + (ship.shield / 100).toFixed(3) + ")";
     el.boost.classList.toggle("is-on", !!keys.boost && ship.alive);
     if (hudClock > 0) return;
     hudClock = 0.1;
@@ -1123,7 +1172,8 @@ float vnoise(vec3 x){
     } else if (a === "quality") {
       quality = quality === 1 ? 0.72 : quality === 0.72 ? 0.5 : 1;
       act.textContent =
-        "Resolution: " + (quality === 1 ? "Full" : quality === 0.72 ? "Balanced" : "Fast");
+        "Resolution: " +
+        (quality === 1 ? "Full" : quality === 0.72 ? "Balanced" : "Fast");
       W = H = 0;
       resize();
     }
@@ -1178,7 +1228,14 @@ float vnoise(vec3 x){
      by rAF, which does not run in a hidden tab. */
   SG.game = {
     step: step,
-    state: { ship: ship, cam: cam, game: game, bolts: bolts, drones: drones, shards: shards },
+    state: {
+      ship: ship,
+      cam: cam,
+      game: game,
+      bolts: bolts,
+      drones: drones,
+      shards: shards,
+    },
     world: world,
     cfg: CFG,
     restart: restart,

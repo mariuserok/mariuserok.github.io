@@ -21,8 +21,30 @@
       z = d / 2;
     return {
       p: [
-        -x, -y, -z, x, -y, -z, x, y, -z, -x, y, -z, -x, -y, z, x, -y, z, x, y,
-        z, -x, y, z,
+        -x,
+        -y,
+        -z,
+        x,
+        -y,
+        -z,
+        x,
+        y,
+        -z,
+        -x,
+        y,
+        -z,
+        -x,
+        -y,
+        z,
+        x,
+        -y,
+        z,
+        x,
+        y,
+        z,
+        -x,
+        y,
+        z,
       ],
       i: [
         0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7, 0, 1, 5, 0, 5, 4, 3, 7, 6, 3, 6, 2,
@@ -70,11 +92,31 @@
   function wing(span, rootChord, tipChord, sweep, thick) {
     var t = thick / 2;
     var p = [
-      0, -t, -rootChord / 2, 0, -t, rootChord / 2, 0, t, rootChord / 2, 0, t,
+      0,
+      -t,
+      -rootChord / 2,
+      0,
+      -t,
+      rootChord / 2,
+      0,
+      t,
+      rootChord / 2,
+      0,
+      t,
       -rootChord / 2,
 
-      span, -t * 0.4, sweep - tipChord / 2, span, -t * 0.4, sweep + tipChord / 2,
-      span, t * 0.4, sweep + tipChord / 2, span, t * 0.4, sweep - tipChord / 2,
+      span,
+      -t * 0.4,
+      sweep - tipChord / 2,
+      span,
+      -t * 0.4,
+      sweep + tipChord / 2,
+      span,
+      t * 0.4,
+      sweep + tipChord / 2,
+      span,
+      t * 0.4,
+      sweep - tipChord / 2,
     ];
     var i = [
       0, 2, 1, 0, 3, 2, 4, 5, 6, 4, 6, 7, 0, 1, 5, 0, 5, 4, 3, 7, 6, 3, 6, 2, 0,
@@ -86,8 +128,42 @@
   function icosphere(sub) {
     var t = (1 + Math.sqrt(5)) / 2;
     var p = [
-      -1, t, 0, 1, t, 0, -1, -t, 0, 1, -t, 0, 0, -1, t, 0, 1, t, 0, -1, -t, 0,
-      1, -t, t, 0, -1, t, 0, 1, -t, 0, -1, -t, 0, 1,
+      -1,
+      t,
+      0,
+      1,
+      t,
+      0,
+      -1,
+      -t,
+      0,
+      1,
+      -t,
+      0,
+      0,
+      -1,
+      t,
+      0,
+      1,
+      t,
+      0,
+      -1,
+      -t,
+      0,
+      1,
+      -t,
+      t,
+      0,
+      -1,
+      t,
+      0,
+      1,
+      -t,
+      0,
+      -1,
+      -t,
+      0,
+      1,
     ];
     var i = [
       0, 11, 5, 0, 5, 1, 0, 1, 7, 0, 7, 10, 0, 10, 11, 1, 5, 9, 5, 11, 4, 11,
@@ -140,7 +216,9 @@
   function octahedron() {
     return {
       p: [0, 1, 0, 0, -1, 0, 1, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, -1],
-      i: [0, 4, 2, 0, 2, 5, 0, 5, 3, 0, 3, 4, 1, 2, 4, 1, 5, 2, 1, 3, 5, 1, 4, 3],
+      i: [
+        0, 4, 2, 0, 2, 5, 0, 5, 3, 0, 3, 4, 1, 2, 4, 1, 5, 2, 1, 3, 5, 1, 4, 3,
+      ],
     };
   }
 
@@ -204,7 +282,8 @@
     for (var k in opts) if (Object.hasOwn(opts, k)) o2[k] = opts[k];
     var p = opts.pos || [0, 0, 0];
     o2.pos = [-p[0], p[1], p[2]];
-    if (opts.rot) o2.rot = [opts.rot[0], -opts.rot[1], -opts.rot[2], opts.rot[3]];
+    if (opts.rot)
+      o2.rot = [opts.rot[0], -opts.rot[1], -opts.rot[2], opts.rot[3]];
     var s = opts.scale === undefined ? 1 : opts.scale;
     o2.scale = typeof s === "number" ? [-s, s, s] : [-s[0], s[1], s[2]];
     var before = this.i.length;
@@ -267,7 +346,11 @@
         normals[o + n * 3 + 2] = nz;
       }
       var co = f * 12;
-      var src = [this.i[f * 3] * 4, this.i[f * 3 + 1] * 4, this.i[f * 3 + 2] * 4];
+      var src = [
+        this.i[f * 3] * 4,
+        this.i[f * 3 + 1] * 4,
+        this.i[f * 3 + 2] * 4,
+      ];
       for (var v = 0; v < 3; v++) {
         colors[co + v * 4] = this.c[src[v]];
         colors[co + v * 4 + 1] = this.c[src[v] + 1];
@@ -278,7 +361,7 @@
         radius,
         ax * ax + ay * ay + az * az,
         bx * bx + by * by + bz * bz,
-        cx * cx + cy * cy + cz * cz
+        cx * cx + cy * cy + cz * cz,
       );
     }
     return {
@@ -416,14 +499,22 @@
   /* Projectile: a stretched octahedron, drawn additively. */
   function bolt() {
     var b = new Builder();
-    b.add(octahedron(), { scale: [0.18, 0.18, 1.2], color: [1, 1, 1], emissive: 1 });
+    b.add(octahedron(), {
+      scale: [0.18, 0.18, 1.2],
+      color: [1, 1, 1],
+      emissive: 1,
+    });
     return b.finish();
   }
 
   /* Debris / spark. */
   function shard() {
     var b = new Builder();
-    b.add(octahedron(), { scale: [0.5, 0.5, 0.9], color: [1, 1, 1], emissive: 1 });
+    b.add(octahedron(), {
+      scale: [0.5, 0.5, 0.9],
+      color: [1, 1, 1],
+      emissive: 1,
+    });
     return b.finish();
   }
 

@@ -409,7 +409,7 @@
   }
   /* Tiny seeded PRNG for one-off generation at load time. */
   function rng(seed) {
-    var s = (seed >>> 0) || 1;
+    var s = seed >>> 0 || 1;
     return function () {
       s ^= s << 13;
       s >>>= 0;

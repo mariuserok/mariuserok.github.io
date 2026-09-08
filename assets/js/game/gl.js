@@ -38,7 +38,7 @@
       var log = gl.getShaderInfoLog(s);
       gl.deleteShader(s);
       throw new Error(
-        (type === gl.VERTEX_SHADER ? "Vertex" : "Fragment") + " shader: " + log
+        (type === gl.VERTEX_SHADER ? "Vertex" : "Fragment") + " shader: " + log,
       );
     }
     return s;

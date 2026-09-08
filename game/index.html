@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
     <title>Voidrunner — a browser space shooter by MART</title>
     <meta
       name="description"
@@ -55,7 +58,9 @@
       <div class="hud__corner hud__corner--bl">
         <div>
           <div class="hud__label">Velocity</div>
-          <div class="hud__value"><span id="hudSpeed">0</span><small>m/s</small></div>
+          <div class="hud__value">
+            <span id="hudSpeed">0</span><small>m/s</small>
+          </div>
         </div>
         <div class="meter">
           <div class="meter__fill meter__fill--thr" id="hudThrottle"></div>
@@ -70,7 +75,9 @@
       <div class="hud__corner hud__corner--br">
         <div>
           <div class="hud__label">Shield</div>
-          <div class="hud__value"><span id="hudShieldNum">100</span><small>%</small></div>
+          <div class="hud__value">
+            <span id="hudShieldNum">100</span><small>%</small>
+          </div>
         </div>
         <div class="meter">
           <div class="meter__fill meter__fill--shield" id="hudShield"></div>
@@ -118,14 +125,23 @@
         </ul>
 
         <div class="card__row">
-          <button class="btn" data-act="start" data-when="start over">Launch</button>
-          <button class="btn" data-act="resume" data-when="paused">Resume</button>
-          <button class="btn btn--ghost" data-act="quality">Resolution: Full</button>
+          <button class="btn" data-act="start" data-when="start over">
+            Launch
+          </button>
+          <button class="btn" data-act="resume" data-when="paused">
+            Resume
+          </button>
+          <button class="btn btn--ghost" data-act="quality">
+            Resolution: Full
+          </button>
         </div>
 
-        <p class="note">Your mouse is captured on launch. Press Esc to release it.</p>
+        <p class="note">
+          Your mouse is captured on launch. Press Esc to release it.
+        </p>
         <p class="touch-warning">
-          This one needs a keyboard and a mouse — touch controls are not built yet.
+          This one needs a keyboard and a mouse — touch controls are not built
+          yet.
         </p>
       </div>
     </div>
@@ -135,8 +151,9 @@
         <p class="card__kicker">Cannot start</p>
         <h1 class="card__title">No WebGL2</h1>
         <p class="card__lead">
-          This browser does not expose a WebGL2 context, which the renderer needs
-          for hardware instancing. Try a current Chrome, Edge, Firefox or Safari.
+          This browser does not expose a WebGL2 context, which the renderer
+          needs for hardware instancing. Try a current Chrome, Edge, Firefox or
+          Safari.
         </p>
         <a class="btn" href="../index.html">Back to the portfolio</a>
       </div>
