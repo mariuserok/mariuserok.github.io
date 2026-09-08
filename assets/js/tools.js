@@ -2046,6 +2046,15 @@
     link: "../retro/index.html",
   });
 
+  /* ── Shortcut to Voidrunner ───────────────────────────── */
+  app({
+    id: "voidrunner",
+    name: "Voidrunner",
+    glyph: "▲",
+    hint: "fly a spaceship",
+    link: "../game/index.html",
+  });
+
   /* ═══ SHELL WIRING ══════════════════════════════════════ */
   var desktop = $("#desktop");
 

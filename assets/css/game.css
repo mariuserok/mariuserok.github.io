@@ -1,0 +1,496 @@
+/* ═══════════════════════════════════════════════════════════
+   VOIDRUNNER — canvas, HUD, overlays.
+   Same tokens as the rest of the site so it feels like one place.
+   ═══════════════════════════════════════════════════════════ */
+
+:root {
+  --bg: #05060a;
+  --bg-2: #0a0d16;
+  --panel: #0e1220;
+  --panel-2: #141a2b;
+  --line: #1e2740;
+  --line-2: #2b375a;
+  --text: #e8eaf2;
+  --muted: #8b93ab;
+  --dim: #5c6480;
+  --cyan: #22d3ee;
+  --violet: #a855f7;
+  --pink: #f472b6;
+  --amber: #fbbf24;
+  --green: #4ade80;
+  --blue: #60a5fa;
+  --danger: #fb7185;
+  --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --r: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+#scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+/* ── HUD ─────────────────────────────────────────────────── */
+
+.hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  z-index: 2;
+}
+
+.hud__corner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 22px;
+}
+
+.hud__corner--tl {
+  top: 0;
+  left: 0;
+}
+.hud__corner--tr {
+  top: 0;
+  right: 0;
+  align-items: flex-end;
+}
+.hud__corner--bl {
+  bottom: 0;
+  left: 0;
+}
+.hud__corner--br {
+  bottom: 0;
+  right: 0;
+  align-items: flex-end;
+}
+
+.hud__label {
+  color: var(--dim);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+.hud__value {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 20px rgb(34 211 238 / 0.35);
+}
+
+.hud__value small {
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: 4px;
+  letter-spacing: 0.1em;
+}
+
+.hud__stat {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+/* Meters ------------------------------------------------- */
+
+.meter {
+  width: 190px;
+  height: 6px;
+  background: rgb(255 255 255 / 0.07);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.meter__fill {
+  height: 100%;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(0);
+  border-radius: 99px;
+  transition: background-color 0.25s var(--ease);
+}
+
+.meter__fill--thr {
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  box-shadow: 0 0 14px rgb(34 211 238 / 0.6);
+}
+
+.meter__fill--shield {
+  background: linear-gradient(90deg, var(--violet), var(--pink));
+  box-shadow: 0 0 14px rgb(168 85 247 / 0.6);
+}
+
+.hud__boost {
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 3px 10px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.hud__boost.is-on {
+  color: var(--amber);
+  border-color: var(--amber);
+  box-shadow: 0 0 18px rgb(251 191 36 / 0.45);
+}
+
+.hud__brand {
+  pointer-events: auto;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: color 0.15s;
+}
+.hud__brand:hover {
+  color: var(--cyan);
+}
+
+.hud__title {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+/* Reticle ------------------------------------------------ */
+
+#reticle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  opacity: 0;
+  will-change: transform;
+}
+
+#reticle::before,
+#reticle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+#reticle::before {
+  border: 1px solid rgb(34 211 238 / 0.55);
+  box-shadow: 0 0 12px rgb(34 211 238 / 0.35);
+}
+
+#reticle::after {
+  inset: 19px;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+/* Damage flash ------------------------------------------- */
+
+#flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 35%,
+    rgb(251 113 133 / 0.55) 100%
+  );
+}
+
+/* ── Overlay ─────────────────────────────────────────────── */
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 40%, rgb(34 211 238 / 0.07), transparent 60%),
+    rgb(5 6 10 / 0.82);
+  backdrop-filter: blur(10px);
+}
+
+#overlay[hidden] {
+  display: none;
+}
+
+.card {
+  width: min(560px, 100%);
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 34px 34px 28px;
+  box-shadow:
+    0 40px 90px rgb(0 0 0 / 0.6),
+    0 0 0 1px rgb(255 255 255 / 0.02) inset;
+  text-align: center;
+}
+
+.card__kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin: 0 0 10px;
+}
+
+.card__title {
+  font-size: clamp(30px, 6vw, 46px);
+  line-height: 1.02;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, var(--text), var(--cyan) 55%, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card__lead {
+  color: var(--muted);
+  margin: 0 auto 22px;
+  max-width: 40ch;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Only the matching block for the current overlay mode is shown. */
+#overlay [data-when] {
+  display: none;
+}
+#overlay[data-mode="start"] [data-when~="start"],
+#overlay[data-mode="paused"] [data-when~="paused"],
+#overlay[data-mode="over"] [data-when~="over"] {
+  display: block;
+}
+
+/* The keys list needs its grid back — the generic show rule above is
+   more specific than the .keys rule, so it has to be restated. */
+#overlay[data-mode="start"] .keys[data-when~="start"],
+#overlay[data-mode="paused"] .keys[data-when~="paused"] {
+  display: grid;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.keys li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+kbd {
+  font-family: var(--mono);
+  font-size: 10px;
+  min-width: 26px;
+  text-align: center;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.05);
+  border: 1px solid var(--line-2);
+  border-bottom-width: 2px;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.btn {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 13px 30px;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  background: linear-gradient(120deg, var(--cyan), var(--violet));
+  color: #05060a;
+  cursor: pointer;
+  transition:
+    transform 0.18s var(--ease),
+    box-shadow 0.18s var(--ease);
+  box-shadow: 0 10px 30px rgb(34 211 238 / 0.25);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgb(34 211 238 / 0.35);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--line-2);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  padding: 10px 18px;
+  box-shadow: none;
+}
+
+.btn--ghost:hover {
+  color: var(--text);
+  border-color: var(--cyan);
+  box-shadow: none;
+}
+
+.card__row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tally {
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  margin: 0 0 24px;
+}
+
+.tally div {
+  font-family: var(--mono);
+}
+
+.tally b {
+  display: block;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cyan);
+  font-variant-numeric: tabular-nums;
+}
+
+.tally span {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.note {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--dim);
+  margin: 18px 0 0;
+}
+
+#fatal {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg);
+}
+#fatal[hidden] {
+  display: none;
+}
+
+#noJs {
+  position: fixed;
+  inset: 0;
+  z-index: 9;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--bg);
+}
+
+/* ── Small screens ───────────────────────────────────────── */
+
+@media (max-width: 860px) {
+  .hud__value {
+    font-size: 20px;
+  }
+  .meter {
+    width: 130px;
+  }
+  .hud__corner {
+    padding: 12px 14px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* Pointer lock and WASD are the whole control scheme, so say so
+     rather than shipping something unplayable. */
+  .touch-warning {
+    display: block;
+  }
+}
+
+.touch-warning {
+  display: none;
+  margin: 16px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}

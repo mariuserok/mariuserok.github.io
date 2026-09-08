@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Voidrunner — a browser space shooter by MART</title>
+    <meta
+      name="description"
+      content="A third-person space shooter running on WebGL2 in vanilla JavaScript. Infinite procedural world, no engine, no dependencies."
+    />
+    <meta name="theme-color" content="#05060a" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:title" content="Voidrunner — a browser space shooter" />
+    <meta
+      property="og:description"
+      content="Fly a low-poly fighter through an infinite procedural world. WebGL2, vanilla JS, zero dependencies."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/game.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"
+    />
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+
+    <div class="hud">
+      <div class="hud__corner hud__corner--tl">
+        <a class="hud__brand" href="../index.html">← mart</a>
+        <div class="hud__title">Voidrunner</div>
+      </div>
+
+      <div class="hud__corner hud__corner--tr">
+        <div>
+          <div class="hud__label">Score</div>
+          <div class="hud__value"><span id="hudScore">0</span></div>
+        </div>
+        <div class="hud__stat">
+          <span class="hud__label">Kills</span>
+          <span id="hudKills">0</span>
+        </div>
+        <div class="hud__stat">
+          <span class="hud__label">FPS</span>
+          <span id="hudFps">60</span>
+        </div>
+      </div>
+
+      <div class="hud__corner hud__corner--bl">
+        <div>
+          <div class="hud__label">Velocity</div>
+          <div class="hud__value"><span id="hudSpeed">0</span><small>m/s</small></div>
+        </div>
+        <div class="meter">
+          <div class="meter__fill meter__fill--thr" id="hudThrottle"></div>
+        </div>
+        <div class="hud__stat">
+          <span class="hud__label">Alt</span>
+          <span id="hudAlt">0</span>
+          <span class="hud__boost" id="hudBoost">Boost</span>
+        </div>
+      </div>
+
+      <div class="hud__corner hud__corner--br">
+        <div>
+          <div class="hud__label">Shield</div>
+          <div class="hud__value"><span id="hudShieldNum">100</span><small>%</small></div>
+        </div>
+        <div class="meter">
+          <div class="meter__fill meter__fill--shield" id="hudShield"></div>
+        </div>
+      </div>
+
+      <div id="reticle"></div>
+    </div>
+
+    <div id="flash"></div>
+
+    <div id="overlay" data-mode="start" hidden>
+      <div class="card">
+        <div data-when="start">
+          <p class="card__kicker">WebGL2 · vanilla JS · 0 dependencies</p>
+          <h1 class="card__title">Voidrunner</h1>
+          <p class="card__lead">
+            An infinite procedural world, generated from nothing but a hash
+            function. Fly, dodge the spires, shoot the drones.
+          </p>
+        </div>
+
+        <div data-when="paused">
+          <p class="card__kicker">Standing by</p>
+          <h1 class="card__title">Paused</h1>
+          <p class="card__lead">The void is patient. Take your time.</p>
+        </div>
+
+        <div data-when="over">
+          <p class="card__kicker">Hull breach</p>
+          <h1 class="card__title">Destroyed</h1>
+          <div class="tally">
+            <div><b id="finalScore">0</b><span>Score</span></div>
+            <div><b id="finalKills">0</b><span>Kills</span></div>
+          </div>
+        </div>
+
+        <ul class="keys" data-when="start paused">
+          <li><kbd>Mouse</kbd> steer</li>
+          <li><kbd>W</kbd><kbd>S</kbd> throttle</li>
+          <li><kbd>A</kbd><kbd>D</kbd> roll</li>
+          <li><kbd>Shift</kbd> boost</li>
+          <li><kbd>Click</kbd> / <kbd>Space</kbd> fire</li>
+          <li><kbd>Esc</kbd> pause</li>
+        </ul>
+
+        <div class="card__row">
+          <button class="btn" data-act="start" data-when="start over">Launch</button>
+          <button class="btn" data-act="resume" data-when="paused">Resume</button>
+          <button class="btn btn--ghost" data-act="quality">Resolution: Full</button>
+        </div>
+
+        <p class="note">Your mouse is captured on launch. Press Esc to release it.</p>
+        <p class="touch-warning">
+          This one needs a keyboard and a mouse — touch controls are not built yet.
+        </p>
+      </div>
+    </div>
+
+    <div id="fatal" hidden>
+      <div class="card">
+        <p class="card__kicker">Cannot start</p>
+        <h1 class="card__title">No WebGL2</h1>
+        <p class="card__lead">
+          This browser does not expose a WebGL2 context, which the renderer needs
+          for hardware instancing. Try a current Chrome, Edge, Firefox or Safari.
+        </p>
+        <a class="btn" href="../index.html">Back to the portfolio</a>
+      </div>
+    </div>
+
+    <noscript>
+      <div id="noJs">
+        <div class="card">
+          <h1 class="card__title">JavaScript required</h1>
+          <p class="card__lead">The game is entirely client-side JavaScript.</p>
+        </div>
+      </div>
+    </noscript>
+
+    <script src="../assets/js/game/math.js"></script>
+    <script src="../assets/js/game/gl.js"></script>
+    <script src="../assets/js/game/meshes.js"></script>
+    <script src="../assets/js/game/world.js"></script>
+    <script src="../assets/js/game/main.js"></script>
+  </body>
+</html>
