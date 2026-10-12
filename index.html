@@ -2,520 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>MART | Marius — Software Engineer, Kort &amp; Anlæg</title>
-    <meta
-      name="description"
-      content="Marius (MART) — Software Engineer in IT Kort &amp; Anlæg at OK a.m.b.a., Aarhus. Portals, platform migrations, and an unreasonable amount of WebGL."
-    />
-    <meta name="theme-color" content="#05060a" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Marius</title>
+    <style>
+      :root {
+        --glow: #7dd3fc;
+      }
 
-    <meta
-      property="og:title"
-      content="MART | Marius — Software Engineer, Kort &amp; Anlæg"
-    />
-    <meta
-      property="og:description"
-      content="Software Engineer at OK a.m.b.a. Portals, platform migrations, and an unreasonable amount of WebGL."
-    />
-    <meta property="og:type" content="website" />
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
-    />
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        background: #05060a;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        overflow: hidden;
+      }
+
+      /* Soft radial wash behind the name. */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(circle at 50% 50%, rgba(125, 211, 252, 0.1), transparent 55%);
+        pointer-events: none;
+      }
+
+      h1 {
+        position: relative;
+        font-size: clamp(3rem, 18vw, 11rem);
+        font-weight: 300;
+        letter-spacing: 0.28em;
+        text-indent: 0.28em;
+        color: #f2fbff;
+        text-shadow:
+          0 0 10px rgba(242, 251, 255, 0.55),
+          0 0 30px var(--glow),
+          0 0 70px var(--glow),
+          0 0 140px rgba(125, 211, 252, 0.6);
+        animation: pulse 4s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.88;
+          text-shadow:
+            0 0 10px rgba(242, 251, 255, 0.5),
+            0 0 28px var(--glow),
+            0 0 60px var(--glow),
+            0 0 120px rgba(125, 211, 252, 0.5);
+        }
+        50% {
+          opacity: 1;
+          text-shadow:
+            0 0 14px rgba(242, 251, 255, 0.8),
+            0 0 40px var(--glow),
+            0 0 90px var(--glow),
+            0 0 180px rgba(125, 211, 252, 0.75);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        h1 {
+          animation: none;
+        }
+      }
+    </style>
   </head>
-
   <body>
-    <!-- ── Loader ─────────────────────────────────────────── -->
-    <div class="loader" id="loader" aria-hidden="true">
-      <div class="loader__inner">
-        <div class="loader__glyph">MART<span>◈</span></div>
-        <div class="loader__bar"><i id="loaderBar"></i></div>
-        <div class="loader__pct" id="loaderPct">0%</div>
-      </div>
-    </div>
-
-    <!-- ── Cursor ─────────────────────────────────────────── -->
-    <div class="cursor" id="cursorDot" aria-hidden="true"></div>
-    <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-
-    <!-- ── Overlays ───────────────────────────────────────── -->
-    <canvas id="bg" class="bg-canvas" aria-hidden="true"></canvas>
-    <div class="grain" aria-hidden="true"></div>
-    <div class="scanlines" aria-hidden="true"></div>
-    <div class="vignette" aria-hidden="true"></div>
-    <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
-
-    <!-- ── Nav ────────────────────────────────────────────── -->
-    <header class="nav" id="nav">
-      <a href="#top" class="nav__logo" data-magnetic>
-        <span class="nav__logo-mark">◈</span>
-        <span class="nav__logo-text">MART</span>
-      </a>
-      <nav class="nav__links" aria-label="Primary">
-        <a href="#work" data-nav>Work</a>
-        <a href="#about" data-nav>About</a>
-        <a href="#stack" data-nav>Toolbox</a>
-        <a href="tools/index.html" class="nav__ext">MART-OS ▸</a>
-        <a href="retro/index.html" class="nav__ext">Retro ▸</a>
-        <a href="game/index.html" class="nav__ext">Game ▸</a>
-        <a href="#contact" data-nav>Contact</a>
-      </nav>
-      <a class="nav__cta" href="#contact" data-magnetic>
-        <span>Say hi</span>
-        <em>→</em>
-      </a>
-      <button
-        class="nav__burger"
-        id="burger"
-        aria-label="Toggle menu"
-        aria-expanded="false"
-      >
-        <span></span><span></span>
-      </button>
-    </header>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#work">Work</a>
-      <a href="#about">About</a>
-      <a href="#stack">Toolbox</a>
-      <a href="tools/index.html">MART-OS ▸</a>
-      <a href="retro/index.html">Retro ▸</a>
-      <a href="game/index.html">Game ▸</a>
-      <a href="#contact">Contact</a>
-    </div>
-
-    <main id="top">
-      <!-- ── Hero ─────────────────────────────────────────── -->
-      <section class="hero" id="hero">
-        <div class="hero__inner">
-          <p class="hero__eyebrow reveal">
-            <span class="dot"></span> OK a.m.b.a. · Aarhus · currently
-            caffeinated
-          </p>
-
-          <h1 class="hero__title" data-parallax="0.05">
-            <span class="line"
-              ><span class="word" data-glitch="MART | MARIUS"
-                >MART | MARIUS</span
-              ></span
-            >
-            <span class="line"
-              ><span class="word outline" data-glitch="SOFTWARE ENGINEER"
-                >SOFTWARE ENGINEER</span
-              ></span
-            >
-            <span class="line"
-              ><span class="word grad" data-glitch="KORT &amp; ANLÆG"
-                >KORT &amp; ANLÆG</span
-              ></span
-            >
-          </h1>
-
-          <p class="hero__sub reveal">
-            I build the <b>portals</b> our customers actually click on, drag
-            services onto <b>Horizon</b>, and spend suspicious amounts of time
-            teaching <b>AI</b> to do my job for me. This page is exhibit A.
-          </p>
-
-          <div class="hero__actions reveal">
-            <a href="#work" class="btn btn--primary" data-magnetic>
-              <span>See what I've built</span>
-              <svg
-                viewBox="0 0 24 24"
-                width="16"
-                height="16"
-                aria-hidden="true"
-              >
-                <path
-                  d="M5 12h14M13 5l7 7-7 7"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </a>
-            <a
-              href="https://github.com/mariuserok"
-              target="_blank"
-              rel="noopener"
-              class="btn btn--ghost"
-              data-magnetic
-            >
-              <svg
-                viewBox="0 0 16 16"
-                width="16"
-                height="16"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"
-                />
-              </svg>
-              <span>GitHub</span>
-            </a>
-          </div>
-
-          <div class="hero__stats reveal">
-            <div class="stat">
-              <b data-count="6">0</b><span>years in software</span>
-            </div>
-            <div class="stat">
-              <b data-count="2">0</b><span>guilds joined</span>
-            </div>
-            <div class="stat">
-              <b data-count="0">0</b><span>dependencies on this page</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero__chip" data-parallax="-0.12" aria-hidden="true">
-          <div class="chip">
-            <div class="chip__face chip__face--front">&lt;/&gt;</div>
-            <div class="chip__face chip__face--back">{ }</div>
-            <div class="chip__face chip__face--right">λ</div>
-            <div class="chip__face chip__face--left">∞</div>
-            <div class="chip__face chip__face--top">◈</div>
-            <div class="chip__face chip__face--bottom">⌘</div>
-          </div>
-        </div>
-
-        <a href="#work" class="hero__scroll" aria-label="Scroll to work">
-          <span class="hero__scroll-line"></span>
-          <span class="hero__scroll-text">scroll</span>
-        </a>
-      </section>
-
-      <!-- ── Marquee ──────────────────────────────────────── -->
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee__track">
-          <span
-            >Angular ✦ TypeScript ✦ C# ✦ .NET ✦ Azure DevOps ✦ GCP ✦ Horizon ✦
-            Terraform ✦ Helm ✦ Copilot ✦ WebGL ✦
-          </span>
-          <span
-            >Angular ✦ TypeScript ✦ C# ✦ .NET ✦ Azure DevOps ✦ GCP ✦ Horizon ✦
-            Terraform ✦ Helm ✦ Copilot ✦ WebGL ✦
-          </span>
-        </div>
-      </div>
-
-      <!-- ── Work ─────────────────────────────────────────── -->
-      <section class="section" id="work">
-        <div class="section__head reveal">
-          <span class="section__num">01</span>
-          <h2 class="section__title">What I work on</h2>
-          <p class="section__desc">
-            Portals, the platform underneath them, and the guilds that argue
-            about how to build both.
-          </p>
-        </div>
-
-        <!-- TODO(Marius): sharpen the descriptions below — I kept them deliberately
-             vague because I don't know the internals. Add real numbers where you can. -->
-        <div class="cards">
-          <article class="card reveal" data-tilt data-accent="34,211,238">
-            <div class="card__glow"></div>
-            <div class="card__body">
-              <div class="card__top">
-                <span class="card__tag">Portal</span>
-                <span class="card__year">ongoing</span>
-              </div>
-              <h3 class="card__title">Vaskeportal</h3>
-              <p class="card__text">
-                The web side of OK's car wash business. Customers come to get
-                their car clean; my job is making sure the portal is the easiest
-                part of that.
-              </p>
-              <ul class="card__stack">
-                <li>Angular</li>
-                <li>TypeScript</li>
-                <li>.NET</li>
-                <li>Azure DevOps</li>
-              </ul>
-            </div>
-            <div class="card__shine"></div>
-          </article>
-
-          <article class="card reveal" data-tilt data-accent="168,85,247">
-            <div class="card__glow"></div>
-            <div class="card__body">
-              <div class="card__top">
-                <span class="card__tag">Portal</span>
-                <span class="card__year">ongoing</span>
-              </div>
-              <h3 class="card__title">Sponsorportal</h3>
-              <p class="card__text">
-                Sponsorstøtte, digitised. Local clubs, their members, and the
-                money that quietly flows to them every time someone fills up.
-                Boring is the goal here.
-              </p>
-              <ul class="card__stack">
-                <li>Angular</li>
-                <li>TypeScript</li>
-                <li>.NET</li>
-                <li>SQL</li>
-              </ul>
-            </div>
-            <div class="card__shine"></div>
-          </article>
-
-          <article class="card reveal" data-tilt data-accent="74,222,128">
-            <div class="card__glow"></div>
-            <div class="card__body">
-              <div class="card__top">
-                <span class="card__tag">Platform</span>
-                <span class="card__year">2026</span>
-              </div>
-              <h3 class="card__title">Horizon migration</h3>
-              <p class="card__text">
-                Moving services off the old cluster and onto Horizon, our GCP
-                landing zone. New projects, new registry, new database — ideally
-                without anyone noticing.
-              </p>
-              <ul class="card__stack">
-                <li>GCP</li>
-                <li>Terraform</li>
-                <li>Helm</li>
-                <li>CloudSQL</li>
-              </ul>
-            </div>
-            <div class="card__shine"></div>
-          </article>
-
-          <article class="card reveal" data-tilt data-accent="244,114,182">
-            <div class="card__glow"></div>
-            <div class="card__body">
-              <div class="card__top">
-                <span class="card__tag">Guild</span>
-                <span class="card__year">member</span>
-              </div>
-              <h3 class="card__title">AI Guild</h3>
-              <p class="card__text">
-                Working out where AI genuinely helps us ship and where it just
-                produces confident nonsense. Tooling, prompts, guardrails, and a
-                lot of experiments.
-              </p>
-              <ul class="card__stack">
-                <li>Copilot</li>
-                <li>Agents</li>
-                <li>Prompting</li>
-              </ul>
-            </div>
-            <div class="card__shine"></div>
-          </article>
-
-          <article class="card reveal" data-tilt data-accent="251,191,36">
-            <div class="card__glow"></div>
-            <div class="card__body">
-              <div class="card__top">
-                <span class="card__tag">Guild</span>
-                <span class="card__year">member</span>
-              </div>
-              <h3 class="card__title">Frontend Guild</h3>
-              <p class="card__text">
-                Shared components, shared conventions, shared opinions about
-                whether that should be a signal. Making our frontends feel like
-                they came from the same company.
-              </p>
-              <ul class="card__stack">
-                <li>Angular</li>
-                <li>Design systems</li>
-                <li>Standards</li>
-              </ul>
-            </div>
-            <div class="card__shine"></div>
-          </article>
-
-          <article class="card reveal" data-tilt data-accent="56,189,248">
-            <div class="card__glow"></div>
-            <div class="card__body">
-              <div class="card__top">
-                <span class="card__tag">Playground</span>
-                <span class="card__year">2026</span>
-              </div>
-              <h3 class="card__title">This page</h3>
-              <p class="card__text">
-                Built with an AI agent as a co-pilot, then argued with until it
-                looked right. The background is a hand-written GLSL raymarcher.
-                No framework, no build step, no dependencies.
-              </p>
-              <ul class="card__stack">
-                <li>WebGL</li>
-                <li>GLSL</li>
-                <li>Vanilla JS</li>
-              </ul>
-            </div>
-            <div class="card__shine"></div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ── About ────────────────────────────────────────── -->
-      <section class="section section--split" id="about">
-        <div class="about__text">
-          <div class="section__head reveal">
-            <span class="section__num">02</span>
-            <h2 class="section__title">About</h2>
-          </div>
-          <p class="lead reveal">
-            I'm Marius — <b>MART</b> if you've only ever seen me in a commit log
-            or a Teams thread. Software Engineer in IT Kort &amp; Anlæg here at
-            OK, based in Aarhus.
-          </p>
-          <p class="reveal">
-            Roughly five years of software behind me before I took the engineer
-            title here in December 2025. Most of that time has been spent on the
-            unglamorous middle bit — where the pipeline argues with the database
-            and somebody has to make peace.
-          </p>
-          <p class="reveal">
-            These days it's portals, the platform underneath them, and an
-            <i>enthusiastic</i> amount of poking at AI tooling to see what it
-            can actually take off our plates. This whole page is one of those
-            experiments.
-          </p>
-
-          <div class="facts reveal">
-            <div class="fact"><span>Based</span><b>Aarhus, DK</b></div>
-            <div class="fact"><span>Team</span><b>IT Kort &amp; Anlæg</b></div>
-            <div class="fact"><span>Guilds</span><b>AI &amp; Frontend</b></div>
-          </div>
-        </div>
-
-        <div class="about__visual reveal">
-          <div class="orbit" data-tilt data-tilt-max="14">
-            <div class="orbit__core"><span>◈</span></div>
-            <div class="orbit__ring orbit__ring--1"><i></i></div>
-            <div class="orbit__ring orbit__ring--2"><i></i></div>
-            <div class="orbit__ring orbit__ring--3"><i></i></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── Stack ────────────────────────────────────────── -->
-      <section class="section" id="stack">
-        <div class="section__head reveal">
-          <span class="section__num">03</span>
-          <h2 class="section__title">The toolbox</h2>
-          <p class="section__desc">
-            What I reach for on a normal Tuesday. Bars are vibes, not
-            certifications.
-          </p>
-        </div>
-
-        <div class="stack-grid">
-          <div class="stack-col reveal">
-            <h4>Frontend</h4>
-            <ul>
-              <li data-skill="88"><span>Angular</span></li>
-              <li data-skill="85"><span>TypeScript</span></li>
-              <li data-skill="79"><span>CSS architecture</span></li>
-              <li data-skill="60"><span>WebGL / GLSL</span></li>
-            </ul>
-          </div>
-          <div class="stack-col reveal">
-            <h4>Backend</h4>
-            <ul>
-              <li data-skill="86"><span>C# / .NET</span></li>
-              <li data-skill="82"><span>REST APIs</span></li>
-              <li data-skill="78"><span>SQL</span></li>
-              <li data-skill="70"><span>Node / TypeScript</span></li>
-            </ul>
-          </div>
-          <div class="stack-col reveal">
-            <h4>Platform &amp; AI</h4>
-            <ul>
-              <li data-skill="84"><span>Azure DevOps / CI</span></li>
-              <li data-skill="76"><span>GCP / Horizon</span></li>
-              <li data-skill="72"><span>Terraform / Helm</span></li>
-              <li data-skill="88"><span>AI-assisted dev</span></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── Timeline ─────────────────────────────────────── -->
-      <section class="section" id="journey">
-        <div class="section__head reveal">
-          <span class="section__num">04</span>
-          <h2 class="section__title">Trajectory</h2>
-        </div>
-
-        <ol class="timeline">
-          <li class="timeline__item reveal">
-            <span class="timeline__year">Dec 2025 — now</span>
-            <h3>Software Engineer · IT Kort &amp; Anlæg, OK a.m.b.a.</h3>
-            <p>
-              Portals, platform migrations, and two guilds' worth of opinions.
-              Aarhus.
-            </p>
-          </li>
-          <!-- TODO(Marius): replace this with your actual roles/employers before Dec 2025 -->
-          <li class="timeline__item reveal">
-            <span class="timeline__year">~2020 — 2025</span>
-            <h3>Five years of software before the title</h3>
-            <p>
-              The formative years: first production outage, first proper code
-              review, first time reading a stack trace without panicking.
-            </p>
-          </li>
-        </ol>
-      </section>
-
-      <!-- ── Contact ──────────────────────────────────────── -->
-      <section class="section contact" id="contact">
-        <div class="contact__inner reveal">
-          <span class="section__num">05</span>
-          <h2 class="contact__title" data-glitch="Come say hi">Come say hi</h2>
-          <p class="contact__desc">
-            Got a portal that needs building, a service that needs migrating, or
-            an AI idea you want to argue about? My door is a Teams message away.
-          </p>
-          <a class="contact__mail" href="mailto:mart@ok.dk" data-magnetic
-            >mart@ok.dk</a
-          >
-          <div class="contact__socials">
-            <a
-              href="https://teams.microsoft.com/l/chat/0/0?users=mart@ok.dk"
-              target="_blank"
-              rel="noopener"
-              data-magnetic
-              >Teams</a
-            >
-            <a
-              href="https://github.com/mariuserok"
-              target="_blank"
-              rel="noopener"
-              data-magnetic
-              >GitHub</a
-            >
-            <a href="mailto:mart@ok.dk" data-magnetic>Email</a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <span>© <span id="year">2026</span> MART · Marius</span>
-      <span class="footer__mid"
-        >Built with an AI agent — no frameworks were harmed</span
-      >
-      <a href="#top" data-magnetic>Back to top ↑</a>
-    </footer>
-
-    <script src="assets/js/background.js"></script>
-    <script src="assets/js/main.js"></script>
+    <h1>Marius</h1>
   </body>
 </html>
